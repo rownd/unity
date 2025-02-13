@@ -16,7 +16,7 @@ The Rownd SDK for Unity enables user authentication and profile management in Un
 3. Import the Rownd SDK package:
    - In the Unity Editor, right-click on the Assets folder
    - Select "Import Package" -> "Custom Package"
-   - Navigate to and select `rownd-sdk-unity.unitypackage` from the cloned repository
+   - Navigate to and select `rownd-unity-plugin.unitypackage` from the cloned repository
 
 ## Quick Start
 
@@ -86,18 +86,40 @@ public class MetaAuthSignIn : MonoBehaviour
 
 ## Usage Examples
 
-### Check Authentication Status
-
-```csharp
-bool isAuthenticated = RowndInstance.Instance.State.IsAuthenticated;
-```
-
 ### Get User Data
 
 ```csharp
-var user = RowndInstance.Instance.State.User;
-string email = user.Email;
-string firstName = user.FirstName;
+using UnityEngine;
+using TMPro;
+using Rownd;
+
+
+
+
+public class AuthStatusDisplay : MonoBehaviour
+{
+    public TMP_Text emailText;
+    public TMP_Text userIdText;
+
+    void Start()
+    {
+        var user = RowndInstance.Instance.State.User;
+        string email = user.Email;
+        string userId = user.UserId;
+        string appId = RowndInstance.Instance.State.AppConfig.App.Id;
+        
+        if (appId != null)
+        {
+            emailText.text = "user email: " + email;
+            userIdText.text = "user id: " + userId;
+        }
+        else
+        {
+            emailText.text = "no app id";
+            userIdText.text = "no app id";
+        }
+    }
+}
 ```
 
 ## Support
